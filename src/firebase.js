@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app"
+import { collection, getFirestore, getDocs } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyAfwFELXR4az0v24V8h5JaFjwhal34cWn0",
@@ -13,5 +14,28 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 // services
-// collection
-// get collection
+const db = getFirestore();
+
+// collection ref
+// db is service, books is collection name
+const colRef = collection(db, 'books')
+
+// get collection data
+getDocs(colRef)
+  .then((snapshot) => {
+    console.log(snapshot.docs);
+
+    let books = []
+    snapshot.docs.forEach(doc => {
+      books.push({
+        ...doc.data(),
+        id: doc.id
+      })
+    })
+
+    console.log(books)
+  })
+  // Error handler goes here
+  .catch(err => {
+    console.error(err.message)
+  })
