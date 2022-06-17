@@ -14,11 +14,11 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 // services
-const db = getFirestore();
+export const db = getFirestore();
 
 // collection ref
 // db is service, books is collection name
-const colRef = collection(db, 'books')
+export const colRef = collection(db, 'books')
 
 // get collection data
 getDocs(colRef)
