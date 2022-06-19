@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app"
-import { collection, getFirestore, getDocs } from "firebase/firestore"
+import { collection, getFirestore, getDocs, onSnapshot } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyAfwFELXR4az0v24V8h5JaFjwhal34cWn0",
@@ -39,3 +39,17 @@ getDocs(colRef)
   .catch(err => {
     console.error(err.message)
   })
+
+  // real time collection data
+onSnapshot(colRef, (snapshot) => {
+  let books = []
+
+  snapshot.docs.forEach((doc) => {
+    books.push({
+      ...doc.data(),
+      id: doc.id
+    })
+  })
+
+  console.log(books);
+})
