@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app"
-import { collection, getFirestore, getDocs, onSnapshot } from "firebase/firestore"
+import { collection, getFirestore, getDocs, onSnapshot, query, where } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyAfwFELXR4az0v24V8h5JaFjwhal34cWn0",
@@ -19,6 +19,9 @@ export const db = getFirestore();
 // collection ref
 // db is service, books is collection name
 export const colRef = collection(db, 'books')
+
+// queries
+const q = query(colRef, where('author', '==', 'dfdffds'))
 
 // get collection data
 getDocs(colRef)
@@ -40,8 +43,11 @@ getDocs(colRef)
     console.error(err.message)
   })
 
-  // real time collection data
-onSnapshot(colRef, (snapshot) => {
+// real time collection data
+
+// if passed q instead of colRef, you get the query results
+
+onSnapshot(q, (snapshot) => {
   let books = []
 
   snapshot.docs.forEach((doc) => {
